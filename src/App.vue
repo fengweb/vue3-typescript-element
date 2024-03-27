@@ -6,18 +6,21 @@
     <Edit />
   </div>
 </template>
-<script setup lang="ts"></script>
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { reqUserInfo } from '@/api/user'
+let list = ref([])
+onMounted(() => {
+  getList()
+})
+const getList = async () => {
+  const params = {
+    page: 1,
+    limit: 10,
+  }
+  let result = await reqUserInfo(params)
+  console.log(result)
+  list.value = result.data
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+</script>
+<style scoped></style>
